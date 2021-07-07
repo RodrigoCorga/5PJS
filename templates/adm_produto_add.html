@@ -1,0 +1,49 @@
+{% extends 'adm_layout.html' %}
+{% block title %}TechWorkd-Adicionar Produto{% endblock %}
+{% block bodytitle %}Adicionar Produtos{% endblock %}
+{% block path %}Produtos / Adicionar{% endblock %}
+{% block content %}
+<section class="content">
+    <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Adicionar Produto</h3>
+        </div>
+        <!-- form start -->
+        <form method="POST">
+            <div class="card-body row">
+                <div class="col-6">
+                    <label for="NomeProduto">Nome do Produto</label>
+                    {{ form.nome(class="form-control", type="text", id="NomeProduto", placeholder="Laptop XYZ")}}
+                </div>
+                <div class="col-4">
+                    <label for="Preco">Preço</label><br>
+                    <div class="input-group-prepend" style="float:left">
+                        <span class="input-group-text">R$</span>
+                    </div>
+                    {{ form.preco(class="form-control col-10", type="text", id="Preco", placeholder="9999.99")}}
+                </div>
+                <div class="col-2">
+                    <label for="Estoque">Estoque</label>
+                    {{ form.estoque(class="form-control", type="text", id="Estoque", placeholder="99")}}
+                </div>
+                <br><br><br><br>
+                <div class="col-2">
+                    <label for="Descricao">Categoria do Produto</label>
+                    {{ form.categoria(class="form-control", type="text", id="Categoria")}}
+                </div>
+                <div class="col-10">
+                    <label for="Descricao">Descrição do Produto</label>
+                    {{ form.descricao(class="form-control", type="text", id="Descricao")}}
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <a type="button" class="btn btn-danger" href="{{ url_for('adm_index') }}">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- /.content -->
+{% endblock %}
+{% block js %}{% endblock %}

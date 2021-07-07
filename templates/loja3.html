@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="RodrigoCorga&PedroHenrique">
+    <title>Produtos | TechWorld</title>
+    <link href="./static/css/utilitybootstrap.min.css" rel="stylesheet">
+    <link href="./static/css/prettyPhoto.css" rel="stylesheet">
+    <link href="./static/css/price-range.css" rel="stylesheet">
+    <link href="./static/css/animate.css" rel="stylesheet">
+	<link href="./static/css/shopmain.css" rel="stylesheet">
+	<link href="./static/css/responsive.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-md-1 clearfix">
+						<div class="logo pull-left">
+							<a href="{{ url_for('index') }}"><img src="./static/icons/techworld.svg" alt="TechWorld-Logo" height="40px"/></a>
+						</div>
+					</div>
+					<div class="col-md-3 clearfix" style="margin-left:-55px;">
+						<h4>TechWorld</h4>
+					</div>
+					<div class="col-md-8 clearfix">
+						<div class="shop-menu clearfix pull-right">
+							<ul class="nav navbar-nav">
+								{% if current_user.is_authenticated %}
+								<li><a href="{{ url_for('carrinho') }}"><i class="fa fa-shopping-cart"></i>Carrinho</a></li>
+								<li><a href="{{ url_for('logout') }}"><i class="fa fa-lock"></i> Logout</a></li>
+								{% else %}
+								<li><a href="{{ url_for('login') }}"><i class="fa fa-lock"></i> Login</a></li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+	
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="{{ url_for('index') }}">Home</a></li>
+								<li><a href="{{ url_for('loja0') }}" class="active">Produtos</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="search_box pull-right">
+							<input type="text" placeholder="Search"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-bottom-->
+	</header><!--/header-->
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<h2>Categorias</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="{{ url_for('loja0') }}">Gabinetes</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="{{ url_for('loja1') }}">Monitores</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="{{ url_for('loja2') }}">Teclados</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="{{ url_for('loja3') }}">Mouses</a></h4>
+								</div>
+							</div>
+						</div><!--/category-products-->
+					</div>
+				</div>
+
+				<div class="col-sm-9 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center">Mouses</h2>
+						{% for mouse in mouses %}
+						<div class="col-sm-4">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+									<form method="POST">
+										<div class="productinfo text-center">
+											<img src="./static/imagens/produtos/NotFound.jpg" alt="" height="250em"/>
+											<h2>R${{mouse.preco}}</h2>
+											<p>{{mouse.nome}}</p>
+											<input type="hidden" id="id" name="id" value={{mouse.id}}>
+											<button type="submit" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Adicionar ao Carrinho</button>
+										</div>
+										<div class="product-overlay">
+											<div class="overlay-content">
+												<h2>R${{mouse.preco}}</h2>
+												<p>{{mouse.nome}}</p>
+												<button type="submit" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Adicionar ao Carrinho</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					</div><!--features_items-->
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer id="footer"><!--Footer-->
+		<div class="footer-widget">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-10">
+						<div class="single-widget">
+							<h2>Sobre</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">
+									Este trabalho foi criado pelo alunos Rodrigo Corga e Pedro Henrique,
+									para a disciplina 5PBS para a  Faculdade de Educação Tecnológica do
+									Estado do Rio de Janeiro, e o mesmo somente possui intuito acadêmico.
+									Portanto não será utilizado para quaisquer fins profissionais!
+								</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Contatos</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">rodrigocorga@gmail.com</a></li>
+								<li><a href="#">pedroh.massa.gomes@gmail.com</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left"><strong>Copyright &copy; 2020-2021 TechWorld.</strong>
+						All rights reserved.</p>
+				</div>
+			</div>
+		</div>
+	</footer><!--/Footer-->
+
+    <script src="./static/js/jquery.js"></script>
+	<script src="./static/js/bootstrap.min.js"></script>
+	<script src="./static/js/price-range.js"></script>
+    <script src="./static/js/jquery.prettyPhoto.js"></script>
+    <script src="./static/js/main.js"></script>
+</body>
+</html>

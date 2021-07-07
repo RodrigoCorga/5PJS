@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="RodrigoCorga&PedroHenrique">
+    <title>Home | TechWorld</title>
+    <link href="./static/css/utilitybootstrap.min.css" rel="stylesheet">
+    <link href="./static/css/prettyPhoto.css" rel="stylesheet">
+    <link href="./static/css/price-range.css" rel="stylesheet">
+    <link href="./static/css/animate.css" rel="stylesheet">
+	<link href="./static/css/shopmain.css" rel="stylesheet">
+	<link href="./static/css/responsive.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-md-1 clearfix">
+						<div class="logo pull-left">
+							<a href="{{ url_for('index') }}"><img src="./static/icons/techworld.svg" alt="TechWorld-Logo" height="40px"/></a>
+						</div>
+					</div>
+					<div class="col-md-3 clearfix" style="margin-left:-55px;">
+						<h4>TechWorld</h4>
+					</div>
+					<div class="col-md-8 clearfix">
+						<div class="shop-menu clearfix pull-right">
+							<ul class="nav navbar-nav">
+								{% if current_user.is_authenticated %}
+								<li><a href="{{ url_for('carrinho') }}"><i class="fa fa-shopping-cart"></i>Carrinho</a></li>
+								<li><a href="{{ url_for('logout') }}"><i class="fa fa-lock"></i> Logout</a></li>
+								{% else %}
+								<li><a href="{{ url_for('login') }}"><i class="fa fa-lock"></i> Login</a></li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+	
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="{{ url_for('index') }}" class="active">Home</a></li>
+								<li><a href="{{ url_for('loja0') }}">Produtos</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="search_box pull-right">
+							<input type="text" placeholder="Search"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-bottom-->
+	</header><!--/header-->
+
+	<section id="cart_items">
+		<div class="container">
+			<div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="{{ url_for('index') }}">Home</a></li>
+				  <li class="active">Carrinho</li>
+				</ol>
+			</div>
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="description">Produto</td>
+							<td class="price">Preço</td>
+							<td class="quantity">Quantidade</td>
+							<td class="total">Total</td>
+						</tr>
+					</thead>
+					<tbody>
+						{% if items != None and items%}
+							{% for item in items %}
+							<tr>
+								<td class="cart_description">
+									<h4><a href="">{{item.nome}}</a></h4>
+								</td>
+								<td class="cart_price">
+									<p>R${{item.preco}}</p>
+								</td>
+								<td class="cart_price">
+									<p>{{item.quantidade}}</p>
+								</td>
+								<td class="cart_total">
+									<p class="cart_total_price">R${{ item.preco * item.quantidade }}</p>
+								</td>
+							</tr>
+							{% endfor%}
+						{% else %}
+							<tr>
+								<td class="cart_description">
+									<h4><a href="">Nenhum item no Carrinho</a></h4>
+								</td>
+							</tr>
+						{% endif %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section> <!--/#cart_items-->
+
+	{% if items != None and items %}
+	<section id="do_action">
+		<div class="container">
+			<div class="heading">
+				<h3>Fechar compra</h3>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="total_area">
+						<ul>
+							<li>Total <span>R${{carrinho.total}}</span></li>
+						</ul>
+							<form method="POST">
+								<button type="submit" class="btn btn-default update" href="">Comprar</button>
+							</form>
+							<a class="btn btn-default update" href="{{ url_for('limpar') }}">Limpar Carrinho</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!--/#do_action-->
+	{% endif %}
+
+	<footer id="footer"><!--Footer-->
+		<div class="footer-widget">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-10">
+						<div class="single-widget">
+							<h2>Sobre</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">
+									Este trabalho foi criado pelo alunos Rodrigo Corga e Pedro Henrique,
+									para a disciplina 5PBS para a  Faculdade de Educação Tecnológica do
+									Estado do Rio de Janeiro, e o mesmo somente possui intuito acadêmico.
+									Portanto não será utilizado para quaisquer fins profissionais!
+								</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Contatos</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">rodrigocorga@gmail.com</a></li>
+								<li><a href="#">pedroh.massa.gomes@gmail.com</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left"><strong>Copyright &copy; 2020-2021 TechWorld.</strong>
+						All rights reserved.</p>
+				</div>
+			</div>
+		</div>
+	</footer><!--/Footer-->
+
+    <script src="./static/js/jquery.js"></script>
+	<script src="./static/js/bootstrap.min.js"></script>
+	<script src="./static/js/price-range.js"></script>
+    <script src="./static/js/jquery.prettyPhoto.js"></script>
+    <script src="./static/js/main.js"></script>
+</body>
+</html>

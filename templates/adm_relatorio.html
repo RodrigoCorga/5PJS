@@ -1,0 +1,104 @@
+{% extends 'adm_layout.html' %}
+{% block title %}TechWorkd-Relatorio{% endblock %}
+{% block bodytitle %}Relatório de Vendas{% endblock %}
+{% block path %}Vendas{% endblock %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Relatório de Vendas</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Id do Cliente</th>
+                    <th>Data da Venda</th>
+                    <th>Valor da Venda</th>
+                    <th>Detalhes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for venda in vendas %}
+                    <tr>
+                        <td>{{ venda.idUser }}</td>
+                        <td>{{ venda.data }}</td>
+                        <td>R${{ venda.total }}</td>
+                        <td><form method="POST">
+                          <input type="hidden" id="id" name="id" value="{{venda.id}}">
+                          <button type="submit" class="btn btn-warning">Ver detalhes</button>
+                        </form></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Id do Cliente</th>
+                    <th>Data da Venda</th>
+                    <th>Valor da Venda</th>
+                    <th>Detalhes</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+{% endblock %}
+{% block js %}
+<!-- Datatables -->
+<script src="./static/js/jquery.dataTables.min.js"></script>
+<script src="./static/js/dataTables.bootstrap4.min.js"></script>
+<script src="./static/js/dataTables.buttons.min.js"></script>
+<script src="./static/js/buttons.bootstrap4.min.js"></script>
+<script src="./static/js/buttons.html5.min.js"></script>
+<script src="./static/js/buttons.print.min.js"></script>
+<script src="./static/js/buttons.colVis.min.js"></script>
+<script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "oLanguage":{
+          "sEmptyTable": "Nenhum registro encontrado",
+          "sInfo": "Mostrando de _START_ até _END_, de _TOTAL_ registros",
+          "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+          "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+          "sInfoPostFix": "",
+          "sInfoThousands": ".",
+          "sLengthMenu": "_MENU_ resultados por página",
+          "sLoadingRecords": "Carregando...",
+          "sProcessing": "Processando...",
+          "sZeroRecords": "Nenhum registro encontrado",
+          "sSearch": "Pesquisar",
+          "oPaginate": {
+              "sNext": "Próximo",
+              "sPrevious": "Anterior",
+              "sFirst": "Primeiro",
+              "sLast": "Último"
+          },
+      }
+      });
+    });
+  </script>
+{% endblock %}
